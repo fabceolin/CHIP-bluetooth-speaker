@@ -29,7 +29,7 @@ fi
 
 apt-get update
 apt-get upgrade -y
-apt-get install -y bluez-tools pulseaudio-module-bluetooth pulseaudio libnss-myhostname crudini
+apt-get install -y bluez-tools pulseaudio-module-bluetooth pulseaudio libnss-myhostname crudini u-boot-tools bluez bluez-tools
 
 # See git log for details
 cp -f bt-agent.bin /usr/bin/bt-agent
@@ -58,6 +58,8 @@ if [ $DELETE_FW_ENV == "1" ] ; then
    rm -f /etc/fw_env.config
 fi
 
+mkdir -p /etc/cron.d
+touch /etc/cron.d/disable-heartbeat-led
 # Disable the blinking light
 if [ -f /sys/class/leds/chip\:white\:status/trigger ] ; then
    echo "@reboot root echo none | tee /sys/class/leds/chip\:white\:status/trigger > /dev/null" >> /etc/cron.d/disable-heartbeat-led
